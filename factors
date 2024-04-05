@@ -1,4 +1,7 @@
+#!/usr/bin/env python3
+
 import sys
+import os
 
 def factorize(n):
     factors = []
@@ -16,13 +19,18 @@ def main():
         return
 
     input_file = sys.argv[1]
-    with open(input_file, 'r') as file:
+
+    # Get the absolute path of the script
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    # Combine it with the input file name
+    input_path = os.path.join(script_dir, input_file)
+
+    with open(input_path, 'r') as file:
         for line in file:
-            n = int(line)
+            n = int(line.strip())
             factors = factorize(n)
-            p = factors[0]
-            q = n // p
-            print(f"{n}={p}*{q}")
+            # Output factorization
+            print(f"{n}={factors[0]}*{factors[-1]}")
 
 if __name__ == "__main__":
     main()
