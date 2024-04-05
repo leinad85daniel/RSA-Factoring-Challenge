@@ -1,29 +1,22 @@
 #!/usr/bin/python3
+import math
 import sys
 
 def factorize(n):
-    for i in range(2, int(n ** 0.5) + 1):
+    '''
+    factorize a natural number - n into a product of two numbers.
+    '''
+    for i in range(2, int(math.sqrt(n))+1):
         if n % i == 0:
-            return i, n // i
-    return None, None
+            return f'{n}={i}*{n//i}'
+    return f'{n}={n}*1'
 
-def main(filename):
-    with open(filename, 'r') as file:
-        for line in file:
-            number = int(line.strip())
-            p, q = factorize(number)
-            print(f"{number}={p}*{q}")
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     if len(sys.argv) != 2:
-        print("Usage: factors <file>")
-        print("where <file> is a file containing natural numbers to factor.")
-        print("One number per line")
-        print("You can assume that all lines will be valid natural numbers greater than 1")
-        print("You can assume that there will be no empty line, and no space before and after the valid number")
-        print("The file will always end with a new line")
+        print(f'Usage: {sys.argv[0]} <file>')
         sys.exit(1)
-
     filename = sys.argv[1]
-    main(filename)
-
+    with open(filename) as f:
+        for line in f:
+            n = int(line.strip())
+            print(factorize(n))
